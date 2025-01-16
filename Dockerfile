@@ -1,27 +1,27 @@
-# Step 1: Use a base image with OpenJDK 11 and Maven
-FROM maven:3.8.6-openjdk-11-slim AS build
+# Step 1: Use Maven image with OpenJDK 17 to build the app
+FROM maven:3.8.6-openjdk-17-slim AS build
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the pom.xml and the src directory into the container
+# Copy the pom.xml and source code into the container
 COPY pom.xml .
 COPY src ./src
 
-# Run Maven to build the application and create the JAR file
+# Run Maven to compile the project and create the JAR file
 RUN mvn clean package
 
-# Step 2: Use OpenJDK 11 JDK image for running the application
-FROM openjdk:11-jdk-slim
+# Step 2: Use OpenJDK 17 JRE image to run the app
+FROM openjdk:17-jdk-slim
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the JAR file from the build container to the runtime container
+# Copy the built JAR file from the build image
 COPY --from=build /app/target/rest-api-0.0.1-SNAPSHOT.jar /app/rest-api.jar
 
-# Expose the port for the app to run (default Spring Boot port is 8080)
+# Expose the default port (optional, but good practice for web apps)
 EXPOSE 8080
 
-# Run the JAR file as the entrypoint of the container
+# Run the JAR file when the container starts
 ENTRYPOINT ["java", "-jar", "rest-api.jar"]
