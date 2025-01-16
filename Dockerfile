@@ -1,5 +1,5 @@
 # Step 1: Use an official Maven image with JDK 17
-FROM maven:17-openjdk-slim AS build
+FROM maven:3.8.6-openjdk-17-slim AS build
 
 # Set the working directory
 WORKDIR /app
