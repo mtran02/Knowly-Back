@@ -1,5 +1,5 @@
-# Step 1: Use an official Maven image with JDK 17
-FROM maven:3.8.1-jdk-17-slim AS build
+# Step 1: Use Maven image with JDK 17
+FROM maven:3.8.6-jdk-17-slim AS build
 
 # Set the working directory
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY src ./src
 # Run Maven to build the application and create the JAR file
 RUN mvn clean package
 
-# Step 2: Use a JRE image to run the application
+# Step 2: Use OpenJDK 17 JRE image to run the application
 FROM openjdk:17-jre-slim
 
 # Set the working directory
