@@ -103,7 +103,7 @@ public class CourseController {
     public ResponseEntity<String> deleteCourse(@PathVariable Long id){
         try {
             courseService.deleteCourse(id);
-            return ResponseEntity.status(200).body("Course deleted");
+            return ResponseEntity.status(204).body("Course deleted");
         } catch (Exception e) {
             return ResponseEntity.status(400).body("Failed to update course: " + e.getMessage());
         }
