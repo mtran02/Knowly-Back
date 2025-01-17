@@ -1,27 +1,24 @@
-# Step 1: Use Maven image with OpenJDK 17 to build the app
-FROM maven:3.8.1-openjdk-17-slim AS build
+# Step 1: Build the application using Maven
+FROM maven:3.8.1-openjdk-11 AS build
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
 # Copy the pom.xml and source code into the container
 COPY pom.xml .
 COPY src ./src
 
-# Run Maven to compile the project and create the JAR file
+# Run Maven to build the application and create the JAR file
 RUN mvn clean package
 
-# Step 2: Use OpenJDK 17 JRE image to run the app
-FROM openjdk:17-jdk-slim
+# Step 2: Create the runtime environment with JRE
+FROM openjdk:11-jre-slim
 
-# Set the working directory
-WORKDIR /app
+# Copy the JAR file from the build container to the runtime container
+COPY --from=build /app/target/rest-api-0.0.1-SNAPSHOT.jar /usr/local/lib/app.jar
 
-# Copy the built JAR file from the build image
-COPY --from=build /app/target/rest-api-0.0.1-SNAPSHOT.jar /app/rest-api.jar
+# Define the entry point for the container to run the JAR file
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/app.jar"]
 
-# Expose the default port (optional, but good practice for web apps)
+# Expose port 8080 for the app to listen on
 EXPOSE 8080
-
-# Run the JAR file when the container starts
-ENTRYPOINT ["java", "-jar", "rest-api.jar"]
