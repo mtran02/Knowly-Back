@@ -12,7 +12,7 @@ COPY src ./src
 RUN mvn clean package
 
 # Step 2: Create the runtime environment with JRE
-FROM openjdk:11-jre-slim
+FROM openjdk:17-jdk-slim
 
 # Copy the JAR file from the build container to the runtime container
 COPY --from=build /app/target/rest-api-0.0.1-SNAPSHOT.jar /usr/local/lib/app.jar
