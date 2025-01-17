@@ -82,7 +82,7 @@ public class LessonController {
     public ResponseEntity<String> putLesson(@RequestBody NewLessonRequest request, @PathVariable Long lessonId) {
         try {
             lessonService.updateLesson(lessonId,request);
-            return ResponseEntity.status(200).body("Lesson updated successfully");
+            return ResponseEntity.status(204).body("Lesson updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(400).body("Failed to update lesson: " + e.getMessage());
         }
