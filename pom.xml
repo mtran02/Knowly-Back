@@ -58,16 +58,15 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.10.1</version> <!-- Update to a newer version -->
-            <configuration>
-                <release>17</release> <!-- Ensure you're targeting Java 17 -->
-            </configuration>
-        </plugin>
-    </plugins>
+        	        <plugin>
+		            <groupId>org.apache.maven.plugins</groupId>
+		            <artifactId>maven-compiler-plugin</artifactId>
+		            <version>3.10.1</version> <!-- Update to a newer version -->
+		            <configuration>
+		            <release>17</release> <!-- Ensure you're targeting Java 17 -->
+		            </configuration>
+        	        </plugin>
+                </plugins>
 	</build>
 	
 
