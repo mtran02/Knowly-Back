@@ -98,7 +98,7 @@ public class LessonController {
     public ResponseEntity<String> deleteLesson(@PathVariable Long lessonId) {
         try {
             lessonService.deleteLesson(lessonId);
-            return ResponseEntity.status(200).body("Lesson deleted successfully");
+            return ResponseEntity.status(204).body("Lesson deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.status(400).body("Failed to delete lesson: " + e.getMessage());
         }
