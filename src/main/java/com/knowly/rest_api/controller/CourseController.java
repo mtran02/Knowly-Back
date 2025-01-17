@@ -69,7 +69,7 @@ public class CourseController {
     public ResponseEntity<String> addCourse(@RequestBody NewCourseRequest request){
         try {
             courseService.addCourse(request);
-            return ResponseEntity.status(201).body("Course created successfully");
+            return ResponseEntity.status(200).body("Course created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(400).body("Failed to create course: " + e.getMessage());
         }
