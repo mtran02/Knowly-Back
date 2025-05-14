@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testname="Knowly API Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <stringProp name="TestPlan.comments"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testname="Course API Tests">
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
+      </ThreadGroup>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

@@ -1,28 +1,34 @@
 package com.knowly.rest_api.service;
 
-import com.knowly.rest_api.controller.request.NewCourseRequest;
-import com.knowly.rest_api.entity.Course;
-import com.knowly.rest_api.entity.Lesson;
-import com.knowly.rest_api.repository.CourseRepository;
-import com.knowly.rest_api.repository.LessonRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.knowly.rest_api.controller.request.NewCourseRequest;
+import com.knowly.rest_api.entity.Course;
+import com.knowly.rest_api.repository.CourseRepository;
+import com.knowly.rest_api.repository.LessonRepository;
 
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
-
     private final LessonRepository lessonRepository;
+
     @Autowired
-    public CourseService(CourseRepository courseRepository, LessonRepository lessonRepository){
+    public CourseService(CourseRepository courseRepository, LessonRepository lessonRepository) {
         this.courseRepository = courseRepository;
         this.lessonRepository = lessonRepository;
     }
 
+    public Course createCourse(Course course) {
+        // Remove the courses list logic and use repository
+        return courseRepository.save(course);
+    }
+
     public List<Course> getAllCourses() {
+        // Remove the courses list logic and use repository
         return courseRepository.findAll();
     }
 
@@ -39,7 +45,7 @@ public class CourseService {
 
     public void updateCourse(Long id, NewCourseRequest request) {
         Optional<Course> course = courseRepository.findById(id);
-        if(course.isPresent()){
+        if (course.isPresent()) {
             Course updatedCourse = course.get();
             updatedCourse.setName(request.name());
             updatedCourse.setPrice(request.price());
@@ -47,7 +53,7 @@ public class CourseService {
         }
     }
 
-    public void deleteCourse(Long id){
+    public void deleteCourse(Long id) {
         lessonRepository.deleteByCourseId(id);
         courseRepository.deleteById(id);
     }
