@@ -1,12 +1,13 @@
 package com.knowly.rest_api.steps;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.knowly.rest_api.entity.Course;
 import com.knowly.rest_api.service.CourseService;
@@ -15,6 +16,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+@SpringBootTest
 public class CourseStepDefinitions {
 
     @Autowired
@@ -49,18 +51,30 @@ public class CourseStepDefinitions {
 
     @Given("there are existing courses in the system")
     public void thereAreExistingCoursesInTheSystem() {
-        courseService.createCourse(new Course("Java Basics", "Learn Java fundamentals"));
-        courseService.createCourse(new Course("Spring Boot", "Learn Spring Boot"));
+        Course course1 = new Course();
+        course1.setTitle("Java Course");
+        course1.setDescription("Learn Java");
+        courseService.createCourse(course1);
+
+        Course course2 = new Course();
+        course2.setTitle("Spring Course");
+        course2.setDescription("Learn Spring");
+        courseService.createCourse(course2);
     }
 
     @When("I request all courses")
     public void iRequestAllCourses() {
-        courseList = courseService.getAllCourses();
+        try {
+            courseList = courseService.getAllCourses();
+        } catch (Exception e) {
+            lastException = e;
+        }
     }
 
     @Then("I should receive a list of courses")
     public void iShouldReceiveAListOfCourses() {
+        assertNull(lastException);
         assertNotNull(courseList);
-        assertFalse(courseList.isEmpty());
+        assertTrue(courseList.size() >= 2);
     }
 }

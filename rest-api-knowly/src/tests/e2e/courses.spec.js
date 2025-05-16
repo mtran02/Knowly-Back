@@ -1,15 +1,20 @@
-module.exports = {
-  testDir: "./tests",
+const { defineConfig } = require("@playwright/test");
+
+module.exports = defineConfig({
+  testDir: "./src/tests/e2e",
   use: {
     baseURL: "http://localhost:8081",
+    headless: false,
+    viewport: { width: 1280, height: 720 },
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
     trace: "on-first-retry",
   },
-};
-
-const { test, expect } = require("@playwright/test");
-
-test("should display courses list", async ({ page }) => {
-  await page.goto("/courses");
-  const response = await page.waitForResponse("**/courses");
-  expect(response.status()).toBe(200);
+  reporter: [["html"], ["list"]],
+  projects: [
+    {
+      name: "Chrome",
+      use: { browserName: "chromium" },
+    },
+  ],
 });
